@@ -54,6 +54,7 @@ var Cluster = Backbone.Model.extend({
     defaults: {
         id: "not_set_yet",
         connectionVerified: false,
+        strictVersion: false,
         health: undefined,
         nodesStats: undefined,
         nodesState: undefined,
@@ -93,7 +94,7 @@ var Cluster = Backbone.Model.extend({
                     if (version && version.number) {
                         version = version.number;
                         var _vArray = version.split(".");
-                        if (_vArray.length > 2 && _model.checkVersion(_vArray[0], _vArray[1], _vArray[2])) {
+                        if (_vArray.length > 2 && _model.checkVersion(attrs, _vArray[0], _vArray[1], _vArray[2])) {
                             _model.versionVerified(version);
                             _model.initCluster(connection);
                         } else {
@@ -131,7 +132,8 @@ var Cluster = Backbone.Model.extend({
     },
 
     // returns false or true depending on given version numbers
-    checkVersion: function(major, minor, maintenance) {
+    checkVersion: function(attrs, major, minor, maintenance) {
+        if (! attrs.strictVersion){ return true; };
         if (major == 0 && (minor == 20) && maintenance >= 0) {
             return true;
         }
