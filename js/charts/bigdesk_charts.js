@@ -74,7 +74,7 @@ bigdesk_charts.channels = {
         return stats.map(function(snapshot){
             return {
                 timestamp: +snapshot.id,
-                value: +snapshot.node.http.current_open
+                value: +(snapshot.node.http && snapshot.node.http.current_open)
             }
         })
     },
