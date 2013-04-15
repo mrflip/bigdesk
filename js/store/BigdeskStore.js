@@ -67,7 +67,7 @@ var Cluster = Backbone.Model.extend({
     },
     // id: "cluster_name"
     // baseUrl: "complete URL for REST API including port number"
-    // refreshInterval: _some_number_ [optional, defaults to 2000ms]
+    // refreshInterval: _some_number_ [optional, defaults to 10000ms]
     // dispatcher: function [optional].
     initialize: function(attrs){
         var _model = this;
@@ -84,7 +84,7 @@ var Cluster = Backbone.Model.extend({
             }
             var connection = {
                 baseUrl: attrs.baseUrl,
-                refreshInterval: attrs.refreshInterval || 2000
+                refreshInterval: attrs.refreshInterval || 10000
             };
             var hello = new Hello({},connection);
             hello.fetch({
@@ -166,7 +166,6 @@ var Cluster = Backbone.Model.extend({
         _model.set({      nodeInfo: new NodeInfo({},      connection) });
         _model.set({  clusterState: new ClusterState([],  connection) });
         _model.set({ indicesStatus: new IndicesStatus([], connection) });
-
         this.startFetch(connection.refreshInterval);
 
     },

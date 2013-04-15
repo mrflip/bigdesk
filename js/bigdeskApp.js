@@ -302,8 +302,8 @@ $(document).ready(
         var parseUrlParams = function() {
             return {
                 endpoint: getSearchUrlVar("endpoint") || "http://localhost:9200",
-                refresh: getSearchUrlVar("refresh") || 2000,
-                history: getSearchUrlVar("history") || 300000,
+                refresh: getSearchUrlVar("refresh") ||  10000, // 10 sec
+                history: getSearchUrlVar("history") || 300000, //  5 min
                 connect: getSearchUrlVar("connect") || false
             }
         };
