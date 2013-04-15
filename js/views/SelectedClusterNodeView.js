@@ -146,9 +146,12 @@ var SelectedClusterNodeView = Backbone.View.extend({
                         var opened_http_channels = bigdesk_charts.channels.series1(stats);
                         var opened_transport_server_channels = bigdesk_charts.channels.series2(stats);
 
-                        var theLatestTotalOpened = stats[stats.length-1].node.http.total_opened;
+                        var httpInfo = stats[stats.length-1].node.http;
+                        var theLatestTotalOpened = httpInfo && httpInfo.total_opened;
 
-                        try { chart_channels.animate(animatedCharts).update(opened_http_channels, opened_transport_server_channels); } catch (ignore) {}
+                        if (httpInfo) {
+                          try { chart_channels.animate(animatedCharts).update(opened_http_channels, opened_transport_server_channels); } catch (ignore) {}
+                        }
 
                         if (opened_http_channels.length > 0) {
                             $("#open_http_channels").text(opened_http_channels[opened_http_channels.length-1].value);
