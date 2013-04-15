@@ -1,4 +1,4 @@
-/*   
+/*
    Copyright 2011-2012 Lukas Vlcek
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -238,15 +238,28 @@ $(document).ready(
                 button.val("Disconnect");
                 restEndPoint.attr('disabled','disabled');
             }
+          updateUrl();
         };
 
+      function updateUrl(){
+        var new_url = [
+          window.location.protocol, '//', window.location.host, window.location.pathname,
+          '?refresh=', getRefreshInterval(), '&history=', getStoreSize(),
+          '&connect=', isConnected(),        '&endpoint=', restEndPoint.val(),
+          window.location.hash
+        ].join('');
+        history.replaceState({}, 'bigdesk', new_url);
+      }
+
         refreshInterval.change(function(){
+          updateUrl();
             if (isConnected()) {
                 changeRefreshInterval(restEndPoint.val(), getRefreshInterval());
             }
         });
 
         storeSize.change(function(){
+          updateUrl();
            if (isConnected()) {
                changeStoreSize(restEndPoint.val(), getStoreSize());
            }
